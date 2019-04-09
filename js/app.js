@@ -11,10 +11,16 @@ var allImgSpots = [];
 var numberOfTurns = 0;
 
 //Some arrays for recording
-// var voteNumber = [];
-// var namesOfProducts = [];
-// var numOfClicks = 'Number of Clicks';
+var clickChart;
 var clickNumber = [];
+var imgNames = [];
+
+function updateArraysChart() {
+  for (var i = 0; i < allImgSpots.length; i++) {
+    imgNames[i] = allImgSpots[i].name;
+    clickNumber[i] = allImgSpots[i].clicks;
+  }
+}
 
 //Constructor Function
 function Product(name, filepath, index) {
@@ -88,13 +94,14 @@ function randomImage() {
   imageSpotTwo.addEventListener('click', handleImageClick);
   imageSpotThree.addEventListener('click', handleImageClick);
 
-  // numberOfTurns++;
+  
   // if (numberOfTurns === 25) {
-  //   displayData();
+  //   displayChart();
   // }
 }
 
 randomImage();
+
 
 function handleImageClick(event) {
   console.log('target', event.target);
@@ -103,6 +110,7 @@ function handleImageClick(event) {
   console.log(event.target.clickedOn);
   clickNumber.push(event.target.index);
   console.log(clickNumber);
+  console.log(`number of turns ${numberOfTurns}`);
   randomImage();
 
   // End the handler after 25 handleImageClick
@@ -110,6 +118,71 @@ function handleImageClick(event) {
     document.getElementById('imageSpotOne').removeEventListener('click', handleImageClick);
     document.getElementById('imageSpotTwo').removeEventListener('click', handleImageClick);
     document.getElementById('imageSpotThree').removeEventListener('click', handleImageClick);
+    updateArraysChart();
+    displayChart();
+    showResults();
   }
 }
 
+function showResults() {
+  var resultList = document.getElementById('results');
+  resultList.innerHTML = '';
+  for (var i = 0; i < allImgSpots.length; i++) {
+    var ullist = document.createElement('li');
+    ullist.textContent = `The ${allImgSpots[i].name} was seen ${allImgSpots[i].views} times and was picked ${allImgSpots[i].clicks} times. This was a click rate of ${Math.round((allImgSpots[i].clicks / allImgSpots[i].views)*100)}%.`;
+    resultList.appendChild(ullist);
+  }
+}
+
+var data = {
+  labels: imgNames,
+  datasets: [
+    {
+      label: 'Number of Clicks',
+      data: clickNumber,
+      backgroundColor: [
+        'rgba(0, 12, 245, 1)',
+        'rgba(255, 0, 0, 1)',
+        'rgba(11, 177, 11, 1)',
+        'rgba(255, 237, 36, 1)',
+        'rgba(255, 118, 5, 1)',
+        'rgba(0, 12, 245, 1)',
+        'rgba(255, 0, 0, 1)',
+        'rgba(11, 177, 11, 1)',
+        'rgba(255, 237, 36, 1)',
+        'rgba(255, 118, 5, 1)',
+        'rgba(0, 12, 245, 1)',
+        'rgba(255, 0, 0, 1)',
+        'rgba(11, 177, 11, 1)',
+        'rgba(255, 237, 36, 1)',
+        'rgba(255, 118, 5, 1)',
+        'rgba(0, 12, 245, 1)',
+        'rgba(255, 0, 0, 1)',
+        'rgba(11, 177, 11, 1)',
+        'rgba(255, 237, 36, 1)',
+        'rgba(255, 118, 5, 15)',
+      ],
+    }
+  ]
+};
+
+function displayChart() {
+  var ctx = document.getElementById('product-chart').getContext('2d');
+  clickChart = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+      scales: {
+        xAxes: [{
+          barPercentage: 0.5,
+          barThickness: 15,
+          maxBarThickness: 20,
+          minBarLength: 0,
+          gridLines: {
+            offsetGridLines: true
+          }
+        }]
+      }
+    }
+  });
+}
