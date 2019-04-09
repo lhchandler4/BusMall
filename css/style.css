@@ -28,3 +28,7 @@ h4 {
 div {
   margin-left: 13%;
 }
+
+ul {
+  list-style-type: disc;
+}
