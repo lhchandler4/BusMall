@@ -168,6 +168,7 @@ var data = {
 
 function displayChart() {
   var ctx = document.getElementById('product-chart').getContext('2d');
+  // ctx.style.backgroundColor = '#777';
   clickChart = new Chart(ctx, {
     type: 'bar',
     data: data,
