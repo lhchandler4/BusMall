@@ -33,6 +33,10 @@ function Product(name, filepath, index) {
   allImgSpots.push(this);
 }
 
+if (localStorage.allImgSpotRecord){
+  allImgSpots = JSON.parse(localStorage.allImgSpotRecord);
+  console.log('parsed data ', JSON.parse(localStorage.allImgSpotRecord));
+} else {
 //new Product('name', 'filepath', 'index');
 new Product('Star Wars Rolling Bag', 'img/bag.jpg', '0');
 new Product('Banana Slicer', 'img/banana.jpg', '1');
@@ -54,6 +58,7 @@ new Product('Unicorn Meat', 'img/unicorn.jpg', '16');
 new Product('USB Tentacle', 'img/usb.gif', '17');
 new Product('Weird Watering Can', 'img/water-can.jpg', '18');
 new Product('Funky Wine Glass', 'img/wine-glass.jpg', '19');
+}
 
 var shownImg = [];
 
@@ -109,6 +114,8 @@ function handleImageClick(event) {
   numberOfTurns++; 
   console.log(event.target.clickedOn);
   clickNumber.push(event.target.index);
+  localStorage.allImgSpotRecord = JSON.stringify(allImgSpots);
+  console.log('stringified ',JSON.stringify(allImgSpots));
   console.log(clickNumber);
   console.log(`number of turns ${numberOfTurns}`);
   randomImage();
@@ -168,6 +175,7 @@ var data = {
 
 function displayChart() {
   var ctx = document.getElementById('product-chart').getContext('2d');
+  // ctx.style.backgroundColor = '#777';
   clickChart = new Chart(ctx, {
     type: 'bar',
     data: data,
