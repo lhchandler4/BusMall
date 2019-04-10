@@ -98,11 +98,6 @@ function randomImage() {
   imageSpotOne.addEventListener('click', handleImageClick);
   imageSpotTwo.addEventListener('click', handleImageClick);
   imageSpotThree.addEventListener('click', handleImageClick);
-
-  
-  // if (numberOfTurns === 25) {
-  //   displayChart();
-  // }
 }
 
 randomImage();
@@ -114,14 +109,14 @@ function handleImageClick(event) {
   numberOfTurns++; 
   console.log(event.target.clickedOn);
   clickNumber.push(event.target.index);
-  localStorage.allImgSpotRecord = JSON.stringify(allImgSpots);
-  console.log('stringified ',JSON.stringify(allImgSpots));
   console.log(clickNumber);
   console.log(`number of turns ${numberOfTurns}`);
   randomImage();
 
   // End the handler after 25 handleImageClick
   if (numberOfTurns === 25) {
+    localStorage.allImgSpotRecord = JSON.stringify(allImgSpots);
+    console.log('stringified ',JSON.stringify(allImgSpots));
     document.getElementById('imageSpotOne').removeEventListener('click', handleImageClick);
     document.getElementById('imageSpotTwo').removeEventListener('click', handleImageClick);
     document.getElementById('imageSpotThree').removeEventListener('click', handleImageClick);
@@ -190,6 +185,13 @@ function displayChart() {
             offsetGridLines: true
           }
         }]
+        // yAxes: [{
+        //   ticks: {
+        //     min: 0,
+        //     max: 100,
+        //     stepSize: 1,
+        //   }
+        // }]
       }
     }
   });
