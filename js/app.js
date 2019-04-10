@@ -174,7 +174,7 @@ function displayChart() {
     options: {
       scales: {
         xAxes: [{
-          barPercentage: 0.5,
+          barPercentage: 1,
           barThickness: 15,
           maxBarThickness: 20,
           minBarLength: 0,
