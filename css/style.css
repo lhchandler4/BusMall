@@ -31,4 +31,6 @@ div {
 
 ul {
   list-style-type: disc;
+  margin-left: 25%;
+  padding: 20px;
 }
